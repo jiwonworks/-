@@ -183,6 +183,9 @@
       border-radius: 14px;
       margin-bottom: 6px;
       border: 1.5px solid var(--card-border);
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
     }
     .result-type-title {
       font-size: 19px;
@@ -311,9 +314,12 @@
   <div id="result-page" class="page">
     <div class="result-content">
       <div class="result-header">
-        <div class="result-tag">당신만을 위한 추천 발라드</div>
         <div class="result-type-title" id="resultTypeTitle">결과 유형명</div>
         <div class="result-desc" id="resultDesc">유형 설명 내용</div>
+      </div>
+
+      <div style="text-align: center;">
+        <div class="result-tag">당신만을 위한 추천 발라드</div>
       </div>
 
       <div class="song-list" id="songList"></div>
@@ -391,7 +397,7 @@
   const results = {
     "희생애절": {
       title: "[희생·애절형]",
-      desc: "깊은 슬픔과 애절한 감성을 가슴 깊이 품고 있는 당신에게 어울리는 발라드입니다.",
+      desc: "깊은 슬픔과 애절한 감성을 가슴 깊이 품고 있는 음악을 선호하는 타입",
       songs: [
         { title: "기도", artist: "정일영", link: "https://www.youtube.com/results?search_query=정일영+기도" },
         { title: "그런 일은", artist: "박화요비", link: "https://www.youtube.com/results?search_query=박화요비+그런일은" },
@@ -401,7 +407,7 @@
     },
     "위로극복": {
       title: "[위로·극복형]",
-      desc: "지친 마음을 따뜻하게 감싸주고 희망과 위로를 전달하는 발라드입니다.",
+      desc: "지친 마음을 따뜻하게 감싸주고 희망과 위로를 전달하는 음악을 선호하는 타입",
       songs: [
         { title: "세상이 그대를 속일지라도", artist: "김장훈", link: "https://www.youtube.com/results?search_query=김장훈+세상이그대를속일지라도" },
         { title: "나를 외치다", artist: "마야", link: "https://www.youtube.com/results?search_query=마야+나를외치다" },
@@ -411,7 +417,7 @@
     },
     "추억아련": {
       title: "[추억·아련형]",
-      desc: "지나간 아름다운 시절과 아련한 추억을 조용히 회상하게 만드는 발라드입니다.",
+      desc: "지나간 아름다운 시절과 아련한 추억을 조용히 회상하게 만드는 음악을 선호하는 타입",
       songs: [
         { title: "미소 속에 비친 그대", artist: "신승훈", link: "https://www.youtube.com/results?search_query=신승훈+미소속에비친그대" },
         { title: "이별 여행", artist: "원미연", link: "https://www.youtube.com/results?search_query=원미연+이별여행" },
@@ -422,7 +428,7 @@
     },
     "담담성찰": {
       title: "[담담·성찰형]",
-      desc: "과장되지 않은 담백함과 조용한 울림으로 삶을 되돌아보게 해주는 발라드입니다.",
+      desc: "과장되지 않은 담백함과 조용한 울림으로 삶을 되돌아보게 해주는 음악을 선호하는 타입",
       songs: [
         { title: "잊혀지는 것", artist: "동물원", link: "https://www.youtube.com/results?search_query=동물원+잊혀지는것" },
         { title: "사랑 그 쓸쓸함에 대하여", artist: "양희은", link: "https://www.youtube.com/results?search_query=양희은+사랑그쓸쓸함에대하여" },
@@ -432,7 +438,7 @@
     },
     "감성낭만": {
       title: "[감성·낭만형]",
-      desc: "동화처럼 맑고 낭만적인 분위기와 섬세한 감수성이 돋보이는 발라드입니다.",
+      desc: "동화처럼 맑고 낭만적인 분위기와 섬세한 감수성이 돋보이는 음악을 선호하는 타입",
       songs: [
         { title: "마법의 성", artist: "더 클래식", link: "https://www.youtube.com/results?search_query=더클래식+마법의성" },
         { title: "환상", artist: "박지윤", link: "https://www.youtube.com/results?search_query=박지윤+환상" },
@@ -442,7 +448,7 @@
     },
     "우정하모니": {
       title: "[우정·하모니형]",
-      desc: "소중한 사람들과의 조화로운 하모니와 동반자적인 따뜻함이 담긴 발라드입니다.",
+      desc: "소중한 사람들과의 조화로운 하모니와 동반자적인 따뜻함이 담긴 음악을 선호하는 타입",
       songs: [
         { title: "그대 내 친구여", artist: "패티김", link: "https://www.youtube.com/results?search_query=패티김+그대내친구여" },
         { title: "청혼", artist: "노을", link: "https://www.youtube.com/results?search_query=노을+청혼" },
