@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>음악 취향 테스트</title>
   <style>
     :root {
@@ -13,28 +13,36 @@
       --card-border: #1A1A1A;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; 
+    }
     
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #E2E0F8;
+    }
+
     body { 
-      background-color: #E2E0F8; 
-      color: #1A1A1A; 
       display: flex; 
       justify-content: center; 
       align-items: center;
       min-height: 100vh;
-      padding: clamp(10px, 3vh, 20px);
+      min-height: 100dvh; /* 스마트폰 가상 주소창 대응 */
+      padding: 0;
     }
 
-    /* 화면 반응형 컨테이너 (모바일 / 데스크톱 대응) */
+    /* 스마트폰 메인 컨테이너 */
     .container {
       width: 100%;
-      max-width: 450px;
-      height: 100%;
-      min-height: min(100vh - 40px, 750px);
-      max-height: 850px;
+      max-width: 430px; /* 프리미엄 모바일 프레임 너비 */
+      height: 100vh;
+      height: 100dvh;
       background-color: #ffffff;
-      padding: clamp(16px, 4vh, 28px) clamp(16px, 4vw, 24px);
-      border-radius: 20px;
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -42,13 +50,22 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* 페이지 화면 제어 */
-    .page { display: none; flex-direction: column; flex-grow: 1; height: 100%; justify-content: space-between; }
-    .page.active { display: flex; animation: fadeIn 0.3s ease; }
+    .page { 
+      display: none; 
+      flex-direction: column; 
+      flex-grow: 1; 
+      height: 100%; 
+      justify-content: space-between; 
+    }
+    .page.active { 
+      display: flex; 
+      animation: fadeIn 0.25s ease-out; 
+    }
 
     /* ================= 1. 표지 페이지 ================= */
     .cover-container {
@@ -58,22 +75,20 @@
       justify-content: flex-end;
       height: 100%;
       width: 100%;
-      padding-bottom: clamp(10px, 3vh, 24px);
+      padding-bottom: 24px;
     }
 
     .cover-start-img-btn {
-      width: 100%;
-      max-width: clamp(260px, 80%, 380px);
+      width: 90%;
+      max-width: 320px;
       cursor: pointer;
-      transition: transform 0.15s ease, filter 0.15s ease;
+      transition: transform 0.15s ease;
       display: block;
       margin: 0 auto;
-    }
-    .cover-start-img-btn:hover {
-      transform: scale(1.02);
+      touch-action: manipulation;
     }
     .cover-start-img-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     /* ================= 2. 질문 페이지 ================= */
@@ -83,18 +98,19 @@
       justify-content: center;
       align-items: center;
       flex-grow: 1;
-      padding: clamp(8px, 2vh, 16px) 0;
       width: 100%;
+      padding: 10px 0;
     }
 
     .progress-bar {
       width: 100%;
-      height: clamp(6px, 1.2vh, 10px);
+      height: 8px;
       background: rgba(233, 239, 247, 0.9);
-      border-radius: 10px;
-      margin-bottom: clamp(12px, 2.5vh, 20px);
+      border-radius: 6px;
+      margin-bottom: 16px;
       border: 1.5px solid var(--card-border);
       overflow: hidden;
+      flex-shrink: 0;
     }
     .progress-fill {
       height: 100%;
@@ -103,27 +119,29 @@
       transition: width 0.3s ease;
     }
 
+    /* 질문 박스 */
     .question-title {
       width: 100%;
-      font-size: clamp(14px, 3.8vw, 17px);
+      font-size: 15px;
       font-weight: 800;
       color: #1A1A1A;
       background-color: var(--soft-mint);
-      margin-bottom: clamp(12px, 2.5vh, 20px);
-      line-height: 1.45;
+      margin-bottom: 14px;
+      line-height: 1.4;
       word-break: keep-all;
-      padding: clamp(12px, 2.2vh, 18px) clamp(14px, 3vw, 18px);
-      border-radius: 14px;
+      padding: 14px 14px;
+      border-radius: 12px;
       border: 2px solid var(--card-border);
       box-shadow: 2px 2px 0px var(--card-border);
       text-align: center;
     }
 
+    /* 선택지 옵션 박스 */
     .options-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(8px, 1.8vh, 14px);
+      gap: 10px;
       width: 100%;
     }
 
@@ -132,21 +150,22 @@
       background: rgba(255, 255, 255, 0.95);
       border: 2px solid var(--card-border);
       border-radius: 12px;
-      padding: clamp(10px, 1.8vh, 15px) clamp(12px, 2.5vw, 16px);
+      padding: 12px 14px;
       text-align: left;
       cursor: pointer;
-      transition: all 0.15s ease;
-      font-size: clamp(12.5px, 3.3vw, 14.5px);
+      transition: background 0.15s ease, transform 0.1s ease;
+      font-size: 13.5px;
       line-height: 1.4;
       color: #333;
       font-weight: 600;
       word-break: keep-all;
       box-shadow: 2px 2px 0px var(--card-border);
+      touch-action: manipulation;
     }
-    .option-btn:hover, .option-btn:active {
+    .option-btn:active {
       background: var(--sub-purple);
       color: var(--main-purple);
-      transform: translateY(-1px);
+      transform: scale(0.98);
     }
 
     /* ================= 3. 결과 페이지 ================= */
@@ -155,49 +174,49 @@
       flex-direction: column;
       flex-grow: 1;
       justify-content: space-between;
-      gap: clamp(8px, 1.8vh, 14px);
+      gap: 10px;
       height: 100%;
-      padding: clamp(6px, 1.5vh, 12px) 0;
-      overflow-y: auto;
+      padding: 6px 0;
     }
 
     .result-header {
       text-align: center;
       background: rgba(255, 255, 255, 0.95);
-      padding: clamp(12px, 2vh, 16px) clamp(10px, 2vw, 14px);
-      border-radius: 14px;
+      padding: 12px 12px;
+      border-radius: 12px;
       border: 2px solid var(--card-border);
-      box-shadow: 3px 3px 0px var(--card-border);
+      box-shadow: 2px 2px 0px var(--card-border);
       width: 100%;
     }
     .result-tag {
       display: inline-block;
       background: var(--sub-yellow);
       color: #333;
-      font-size: clamp(10.5px, 2.8vw, 12px);
+      font-size: 11px;
       font-weight: bold;
       padding: 4px 10px;
-      border-radius: 14px;
-      margin-bottom: clamp(4px, 1vh, 8px);
+      border-radius: 12px;
+      margin-bottom: 6px;
       border: 1.5px solid var(--card-border);
     }
     .result-type-title {
-      font-size: clamp(17px, 4.5vw, 21px);
+      font-size: 18px;
       font-weight: 800;
       color: var(--main-purple);
       margin-bottom: 4px;
     }
     .result-desc {
-      font-size: clamp(11.5px, 3vw, 13px);
+      font-size: 12px;
       color: #444;
       line-height: 1.4;
       word-break: keep-all;
     }
 
+    /* 노래 추천 리스트 */
     .song-list {
       display: flex;
       flex-direction: column;
-      gap: clamp(6px, 1.2vh, 10px);
+      gap: 8px;
       width: 100%;
     }
 
@@ -206,11 +225,11 @@
       background: rgba(255, 253, 245, 0.95);
       border: 2px solid var(--card-border);
       border-radius: 10px;
-      padding: clamp(6px, 1.2vh, 10px) clamp(10px, 2vw, 14px);
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       box-shadow: 2px 2px 0px var(--card-border);
     }
     .song-info {
@@ -218,9 +237,10 @@
       flex-direction: column;
       gap: 2px;
       overflow: hidden;
+      flex-grow: 1;
     }
     .song-title { 
-      font-size: clamp(12px, 3.2vw, 13.5px); 
+      font-size: 12.5px; 
       font-weight: 700; 
       color: #111; 
       white-space: nowrap; 
@@ -228,7 +248,7 @@
       text-overflow: ellipsis; 
     }
     .song-artist { 
-      font-size: clamp(10.5px, 2.8vw, 12px); 
+      font-size: 11px; 
       color: #666; 
       white-space: nowrap; 
       overflow: hidden; 
@@ -242,39 +262,36 @@
       background: #FF0000;
       color: white;
       text-decoration: none;
-      font-size: clamp(10px, 2.6vw, 11.5px);
+      font-size: 10.5px;
       font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 14px;
+      padding: 6px 9px;
+      border-radius: 12px;
       white-space: nowrap;
       border: 1px solid var(--card-border);
       flex-shrink: 0;
-      transition: transform 0.1s ease;
-    }
-    .listen-btn:active {
-      transform: scale(0.95);
+      touch-action: manipulation;
     }
 
+    /* 하단 버튼 그룹 */
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: clamp(6px, 1.2vh, 10px);
-      margin-top: 4px;
+      gap: 8px;
       width: 100%;
       align-items: center;
     }
 
     .primary-btn, .share-btn {
       border: 2px solid var(--card-border);
-      border-radius: 24px;
-      padding: clamp(9px, 1.6vh, 12px);
-      font-size: clamp(12.5px, 3.3vw, 14px);
+      border-radius: 20px;
+      padding: 11px;
+      font-size: 13.5px;
       font-weight: bold;
       cursor: pointer;
       width: 100%;
       text-align: center;
       box-shadow: 2px 2px 0px var(--card-border);
-      transition: transform 0.1s ease, background 0.2s ease;
+      touch-action: manipulation;
     }
 
     .primary-btn {
@@ -291,33 +308,18 @@
       transform: translateY(1px);
     }
 
-    /* 작은 화면(높이가 낮은 모바일 등)을 위한 미디어 쿼리 조정 */
-    @media (max-height: 660px) {
+    /* 데스크톱/PC 접속 시 모바일 카드 형태로 깔끔하게 표시 */
+    @media (min-height: 800px) and (min-width: 450px) {
       .container {
-        padding: 14px 16px;
-      }
-      .question-title {
-        margin-bottom: 10px;
-        padding: 10px 12px;
-      }
-      .options-container {
-        gap: 6px;
-      }
-      .option-btn {
-        padding: 8px 12px;
-      }
-    }
-
-    /* 데스크톱/태블릿 화면 크기 대응 모바일 프레임 모드 */
-    @media (min-width: 481px) {
-      .container {
-        border-radius: 24px;
+        height: 800px;
+        border-radius: 20px;
         border: 3px solid var(--card-border);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
